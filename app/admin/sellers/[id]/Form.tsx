@@ -1,60 +1,58 @@
-"use client";
-import useSWRMutation from "swr/mutation";
-import useSWR from "swr";
-import toast from "react-hot-toast";
-import Link from "next/link";
-import { ValidationRule, useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Seller } from "@/lib/models/SellerModel";
-import { formatId } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+'use client'
+import useSWRMutation from 'swr/mutation'
+import useSWR from 'swr'
+import toast from 'react-hot-toast'
+import Link from 'next/link'
+import { ValidationRule, useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+import { Seller } from '@/lib/models/SellerModel'
+import { formatId } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 export default function SellerEditForm({ sellerId }: { sellerId: string }) {
-  const { data: seller, error } = useSWR(`/api/admin/sellers/${sellerId}`);
-  const router = useRouter();
+  const { data: seller, error } = useSWR(`/api/admin/sellers/${sellerId}`)
+  const router = useRouter()
   const { trigger: updateSeller, isMutating: isUpdating } = useSWRMutation(
     `/api/admin/sellers/${sellerId}`,
     async (url, { arg }) => {
       const res = await fetch(`${url}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(arg),
-      });
-      const data = await res.json();
-      if (!res.ok) return toast.error(data.message);
+      })
+      const data = await res.json()
+      if (!res.ok) return toast.error(data.message)
 
-      toast.success("Vendedor atualizado com sucesso.");
-      router.push("/admin/sellers");
+      toast.success('Vendedor atualizado com sucesso.')
+      router.push('/admin/sellers')
     }
-  );
+  )
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<Seller>();
+  } = useForm<Seller>()
 
   useEffect(() => {
-    if (!seller) return;
-    setValue("name", seller.name);
-    setValue("email", seller.email);
-    setValue("storename", seller.storename);
-    setValue("phone", seller.phone);
-    setValue("rating", seller.rating);
-    setValue("numReviews", seller.numReviews);
-    setValue("logo", seller.logo);
-    setValue("description", seller.description);
-  }, [seller, setValue]);
+    if (!seller.sellerContract) return
+    setValue('sellerContract.storename', seller.sellerContract.storename)
+    setValue('sellerContract.phone', seller.sellerContract.phone)
+    setValue('sellerContract.rating', seller.sellerContract.rating)
+    setValue('sellerContract.numReviews', seller.sellerContract.numReviews)
+    setValue('sellerContract.logo', seller.sellerContract.logo)
+    setValue('sellerContract.description', seller.sellerContract.description)
+  }, [seller, setValue])
 
   const formSubmit = async (formData: any) => {
-    await updateSeller(formData);
-  };
+    await updateSeller(formData)
+  }
 
-  if (error) return error.message;
-  if (!seller) return "Carregando...";
+  if (error) return error.message
+  if (!seller) return 'Carregando...'
 
   const FormInput = ({
     id,
@@ -62,10 +60,10 @@ export default function SellerEditForm({ sellerId }: { sellerId: string }) {
     required,
     pattern,
   }: {
-    id: keyof Seller;
-    name: string;
-    required?: boolean;
-    pattern?: ValidationRule<RegExp>;
+    id: keyof Seller
+    name: string
+    required?: boolean
+    pattern?: ValidationRule<RegExp>
   }) => (
     <div className="md:flex my-3">
       <label className="label md:w-1/5" htmlFor={id}>
@@ -86,39 +84,39 @@ export default function SellerEditForm({ sellerId }: { sellerId: string }) {
         )}
       </div>
     </div>
-  );
+  )
 
   const uploadHandler = async (e: any) => {
-    const toastId = toast.loading("Fazendo upload da imagem...");
+    const toastId = toast.loading('Fazendo upload da imagem...')
     try {
-      const resSign = await fetch("/api/cloudinary-sign", {
-        method: "POST",
-      });
-      const { signature, timestamp } = await resSign.json();
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("signature", signature);
-      formData.append("timestamp", timestamp);
-      formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!);
+      const resSign = await fetch('/api/cloudinary-sign', {
+        method: 'POST',
+      })
+      const { signature, timestamp } = await resSign.json()
+      const file = e.target.files[0]
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('signature', signature)
+      formData.append('timestamp', timestamp)
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!)
       const res = await fetch(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`,
         {
-          method: "POST",
+          method: 'POST',
           body: formData,
         }
-      );
-      const data = await res.json();
-      setValue("logo", data.secure_url);
-      toast.success("Arquivo enviado com sucesso.", {
+      )
+      const data = await res.json()
+      setValue('sellerContract.logo', data.secure_url)
+      toast.success('Arquivo enviado com sucesso.', {
         id: toastId,
-      });
+      })
     } catch (err: any) {
       toast.error(err.message, {
         id: toastId,
-      });
+      })
     }
-  };
+  }
 
   return (
     <div>
@@ -127,13 +125,12 @@ export default function SellerEditForm({ sellerId }: { sellerId: string }) {
       </h1>
       <div>
         <form onSubmit={handleSubmit(formSubmit)}>
-          <FormInput name="Nome" id="name" required />
-          <FormInput name="e-mail" id="email" required />
-          <FormInput name="Nome da Loja" id="storename" required />
-          <FormInput name="Telefone" id="phone" required />
-          <FormInput name="Classificação" id="rating" required />
-          <FormInput name="Avaliações" id="numReviews" required />
-          <FormInput name="Logotipo" id="logo" />
+          <input name="Nome" id="name" />
+          <input name="Nome da Loja" id="sellerContract.storename" />
+          <input name="Telefone" id="phone" />
+          <input name="Classificação" id="rating" />
+          <input name="Avaliações" id="numReviews" />
+          <input name="Logotipo" id="logo" />
           <div className="md:flex mb-6">
             <label className="label md:w-1/5" htmlFor="logo">
               Carregar Imagem
@@ -147,7 +144,7 @@ export default function SellerEditForm({ sellerId }: { sellerId: string }) {
               />
             </div>
           </div>
-          <FormInput name="Resumo da loja" id="description" required />
+          <input name="Resumo da loja" id="seller.sellerContract.description" />
 
           <button
             type="submit"
@@ -163,5 +160,5 @@ export default function SellerEditForm({ sellerId }: { sellerId: string }) {
         </form>
       </div>
     </div>
-  );
+  )
 }

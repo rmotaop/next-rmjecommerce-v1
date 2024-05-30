@@ -1,35 +1,35 @@
-"use client";
-import { Review } from "@/lib/models/ReviewModel";
-import { formatId } from "@/lib/utils";
-import Link from "next/link";
-import toast from "react-hot-toast";
-import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
+'use client'
+import { Review } from '@/lib/models/ReviewModel'
+import { formatId } from '@/lib/utils'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
+import useSWR from 'swr'
+import useSWRMutation from 'swr/mutation'
 
 export default function Reviews() {
-  const { data: reviews, error } = useSWR(`/api/admin/reviews`);
+  const { data: reviews, error } = useSWR(`/api/admin/reviews`)
   const { trigger: deleteReview } = useSWRMutation(
     `/api/admin/reviews`,
     async (url, { arg }: { arg: { reviewId: string } }) => {
-      const toastId = toast.loading("Excluindo avaliação...");
+      const toastId = toast.loading('Excluindo avaliação...')
       const res = await fetch(`${url}/${arg.reviewId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
       res.ok
-        ? toast.success("Avaliação excluída com sucesso", {
+        ? toast.success('Avaliação excluída com sucesso', {
             id: toastId,
           })
         : toast.error(data.message, {
             id: toastId,
-          });
+          })
     }
-  );
-  if (error) return "Ocorreu um erro.";
-  if (!reviews) return "Carregando...";
+  )
+  if (error) return 'Ocorreu um erro.'
+  if (!reviews) return 'Carregando...'
 
   return (
     <div>
@@ -77,5 +77,5 @@ export default function Reviews() {
         </table>
       </div>
     </div>
-  );
+  )
 }
