@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="1.1"
+     width="2100"
+     height="966"
+     viewBox="-200 90 2300 600"
+     xml:space="preserve"
+     style="">
+    <rect id="backgroundrect"
+          width="100%"
+          height="100%"
+          x="0"
+          y="0"
+          fill="transparent"
+          stroke="none"
+          class=""
+          style="" />
+    <desc>Created with Fabric.js 5.2.4</desc>
+    <defs>
+    </defs>
+    <g class="currentLayer"
+       style="">
+        <title>Layer 1</title>
+        <g id="974f91e9-616b-4069-b16c-235ae6c1bdb2">
+        </g>
+        <g style=""
+           id="svg_42"
+           class=""
+           fill="#e0c918"
+           fill-opacity="1">
+            <text xml:space="preserve"
+                  font-family="Cursive"
+                  font-size="30"
+                  font-style="normal"
+                  font-weight="bold"
+                  text-decoration="underline"
+                  style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill-rule: nonzero; opacity: 0.91; white-space: pre;"
+                  transform="matrix(8.06964721004964,0,0,9.431177502003486,991.6330998891642,-648.389405175262) "
+                  stroke-width="0"
+                  id="svg_13"
+                  y="112.70700935070667"
+                  x="6.432769645324441"
+                  fill="#e0c918"
+                  fill-opacity="1">
+                <tspan x="-98.42723035467556"
+                       y="122.12700935070669"
+                       id="svg_14"
+                       transform="matrix(0.9999999999999999,0,0,1,-70.82748666656434,-203.22753495312165) ">rmjEcommerce</tspan>
+            </text>
+        </g>
+        <g style=""
+           id="svg_44"
+           class=""
+           fill="#d5d50b"
+           fill-opacity="1"
+           stroke="#ebeb1a"
+           stroke-opacity="1">
+            <text xml:space="preserve"
+                  font-family="Cursive"
+                  font-size="40"
+                  font-style="normal"
+                  font-weight="normal"
+                  style="stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill-rule: nonzero; opacity: 1; white-space: pre;"
+                  transform="matrix(2.833206524848938,0,0,2.676586151123047,1586.2832815231543,2852.5430267397132) "
+                  stroke-width="0"
+                  id="svg_15"
+                  fill="#d5d50b"
+                  fill-opacity="1"
+                  y="-839.0110468859978"
+                  x="-227.17814120780065"
+                  stroke="#ebeb1a"
+                  stroke-opacity="1">
+                <tspan x="-346.4781412078006"
+                       y="-826.4410468859978"
+                       id="svg_16">Online Store</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
