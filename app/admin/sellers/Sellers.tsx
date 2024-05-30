@@ -1,42 +1,39 @@
-"use client";
-import { Seller } from "@/lib/models/SellerModel";
-import { formatId } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
-import toast from "react-hot-toast";
-import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
-import moment from "moment";
-import "moment/locale/pt-br";
+'use client'
+import { Seller } from '@/lib/models/SellerModel'
+import { formatId } from '@/lib/utils'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
+import useSWR from 'swr'
+import useSWRMutation from 'swr/mutation'
+import moment from 'moment'
+import 'moment/locale/pt-br'
 
 export default function Sellers() {
-  const { data: sellers, error } = useSWR(`/api/admin/sellers`);
+  const { data: sellers, error } = useSWR(`/api/admin/sellers`)
   const { trigger: deleteSeller } = useSWRMutation(
     `/api/admin/sellers`,
     async (url, { arg }: { arg: { sellerId: string } }) => {
-      const toastId = toast.loading("Excluindo vendedor...");
+      const toastId = toast.loading('Excluindo vendedor...')
       const res = await fetch(`${url}/${arg.sellerId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
       res.ok
-        ? toast.success("Vendedor excluído com sucesso", {
+        ? toast.success('Vendedor excluído com sucesso', {
             id: toastId,
           })
         : toast.error(data.message, {
             id: toastId,
-          });
+          })
     }
-  );
-  if (error) return "Ocorreu um erro.";
-  if (!sellers) return "Carregando...";
+  )
+  if (error) return 'Ocorreu um erro.'
+  if (!sellers) return 'Carregando...'
 
-  console.log("seller", sellers);
-
-  moment.locale("pt-br");
+  moment.locale('pt-br')
 
   return (
     <div>
@@ -91,8 +88,8 @@ export default function Sellers() {
                 <td>{seller.sellerContract.description}</td>
                 <td>
                   {seller.isPaid && seller.paidAt
-                    ? `${moment(seller.paidAt).format("DD/MM/yyyy")}`
-                    : "pendente"}
+                    ? `${moment(seller.paidAt).format('DD/MM/yyyy')}`
+                    : 'pendente'}
                 </td>
 
                 <td>
@@ -118,5 +115,5 @@ export default function Sellers() {
         </table>
       </div>
     </div>
-  );
+  )
 }
