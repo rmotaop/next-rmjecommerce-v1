@@ -1,14 +1,14 @@
-import Link from "next/link";
-import React from "react";
-import Menu from "./Menu";
-import { SearchBox } from "./SearchBox";
-import { LogoIcon } from "@/public/images/logo/logo";
+import Link from 'next/link'
+import React from 'react'
+import Menu from './Menu'
+import { SearchBox } from './SearchBox'
+import { LogoIcon } from '@/public/images/logo/logo'
 
 const Header = () => {
   return (
     <header className="md:max-lg:flex">
       <nav>
-        <div className="navbar fixed z-50 justify-between bg-base-300">
+        <div className="navbar fixed z-50 bg-base-300">
           <div>
             <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
               <svg
@@ -27,9 +27,9 @@ const Header = () => {
             </label>
           </div>
 
-          <div className="object-none bg-base-300">
+          <div className="bg-base-300 flex flex-wrap mx-auto lg:w-48">
             <Link href="/" className="btn btn-ghost">
-              <LogoIcon className="h-12 w-48" />
+              <LogoIcon className="h-12 w-48 relative hidden md:block" />
             </Link>
           </div>
 
@@ -43,7 +43,7 @@ const Header = () => {
         </div>
       </nav>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -1,40 +1,38 @@
-"use client";
-import useCartService from "@/lib/hooks/useCartStore";
-import useLayoutService from "@/lib/hooks/useLayout";
-import { signIn, signOut, useSession } from "next-auth/react";
+'use client'
+import useCartService from '@/lib/hooks/useCartStore'
+import useLayoutService from '@/lib/hooks/useLayout'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { SearchBox } from "./SearchBox";
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { SearchBox } from './SearchBox'
 
 const Menu = () => {
-  const { items, init } = useCartService();
-  const [mounted, setMounted] = useState(false);
+  const { items, init } = useCartService()
+  const [mounted, setMounted] = useState(false)
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   const signoutHandler = () => {
-    signOut({ callbackUrl: "/" });
-    init();
-  };
+    signOut({ callbackUrl: '/' })
+    init()
+  }
 
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
-  const { theme, toggleTheme } = useLayoutService();
+  const { theme, toggleTheme } = useLayoutService()
 
   const handleClick = () => {
-    (document.activeElement as HTMLElement).blur();
-  };
-
-  console.log("Session", session);
+    ;(document.activeElement as HTMLElement).blur()
+  }
 
   return (
     <>
       <div className="hidden md:block">
         <SearchBox />
       </div>
-      <div>
+      <div className="flex items-stretch">
         <ul className="flex items-stretch">
           <i className="btn btn-ghost ">
             {mounted && (
@@ -42,7 +40,7 @@ const Menu = () => {
                 {/* Esta caixa de seleção oculta controla o estado */}
                 <input
                   type="checkbox"
-                  checked={theme === "light"}
+                  checked={theme === 'light'}
                   onChange={toggleTheme}
                 />
 
@@ -74,7 +72,7 @@ const Menu = () => {
           ) : (
             <>
               <li>
-                <div className="dropdown bg-amber-400 text-black rounded dropdown-bottom dropdown-end">
+                <div className="bg-amber-400 text-black rounded">
                   <label className="btn btn-ghost rounded-btn">
                     <Link href={`/sellerinfo`}>Venda conosco</Link>
                   </label>
@@ -88,7 +86,7 @@ const Menu = () => {
               Carrinho
               {session && session.user && mounted && items.length != 0 && (
                 <div className="badge badge-primary rounded-full -mx-1 ">
-                  {items.reduce((a, c) => a + c.qty, 0)}{" "}
+                  {items.reduce((a, c) => a + c.qty, 0)}{' '}
                 </div>
               )}
             </Link>
@@ -169,7 +167,7 @@ const Menu = () => {
         </ul>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu
