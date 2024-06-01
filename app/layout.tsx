@@ -1,22 +1,22 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Providers from "@/components/Providers";
-import DrawerButton from "@/components/DrawerButton";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/header/Header";
+import './globals.css'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import Providers from '@/components/Providers'
+import DrawerButton from '@/components/DrawerButton'
+import Sidebar from '@/components/Sidebar'
+import Header from '@/components/header/Header'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Rmj Ecommerce V1",
-  description: "O mais moderno site de comércio eletrônico",
-};
+  title: 'Rmj Ecommerce V1',
+  description: 'O mais moderno site de comércio eletrônico',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="pt-BR">
@@ -47,5 +47,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  );
+  )
 }

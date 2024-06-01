@@ -6,11 +6,11 @@ import { LogoIcon } from '@/public/images/logo/logo'
 
 const Header = () => {
   return (
-    <header className="md:max-lg:flex">
+    <header className="">
       <nav>
-        <div className="navbar fixed z-50 bg-base-300">
-          <div>
-            <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
+        <div className="navbar fixed z-50 bg-base-300 min-[500px]:left">
+          <div className="">
+            <label htmlFor="my-drawer" className="btn btn-square btn-ghost ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -26,20 +26,19 @@ const Header = () => {
               </svg>
             </label>
           </div>
-
-          <div className="bg-base-300 flex flex-wrap mx-auto lg:w-48">
-            <Link href="/" className="btn btn-ghost">
-              <LogoIcon className="h-12 w-48 relative hidden md:block" />
-            </Link>
+          <div className="flex flex-wrap justify-around mx-auto min-[500px]:text-left">
+            <div className="left-0">
+              <Link href="/" className="btn btn-ghost">
+                <LogoIcon className="h-12 w-48" />
+              </Link>
+            </div>
+            <div className="left-0">
+              <SearchBox />
+            </div>
+            <div className="left-0">
+              <Menu />
+            </div>
           </div>
-
-          <Menu />
-        </div>
-        <div className="object-cover bg-base-300">
-          <Link href="/" className="bg-sky-300 ... btn btn-ghost"></Link>
-        </div>
-        <div className="bg-base-300 block md:hidden text-center pb-3">
-          <SearchBox />
         </div>
       </nav>
     </header>

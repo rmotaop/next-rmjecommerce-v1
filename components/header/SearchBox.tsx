@@ -1,20 +1,20 @@
-"use client";
-import { useSearchParams } from "next/navigation";
-import useSWR from "swr";
+'use client'
+import { useSearchParams } from 'next/navigation'
+import useSWR from 'swr'
 
 export const SearchBox = () => {
-  const searchParams = useSearchParams();
-  const q = searchParams.get("q") || "";
-  const category = searchParams.get("category") || "Todos";
+  const searchParams = useSearchParams()
+  const q = searchParams.get('q') || ''
+  const category = searchParams.get('category') || 'Todos'
 
-  const { data: categories, error } = useSWR("/api/products/categories");
+  const { data: categories, error } = useSWR('/api/products/categories')
 
-  if (error) return error.message;
-  if (!categories) return "Carregando...";
+  if (error) return error.message
+  if (!categories) return 'Carregando...'
 
   return (
     <form action="/search" method="GET">
-      <div className="join">
+      <div className="join md:text-base sm:text-sm">
         <select
           name="category"
           defaultValue={category}
@@ -26,7 +26,7 @@ export const SearchBox = () => {
           ))}
         </select>
         <input
-          className="join-item input input-bordered  w-48"
+          className="join-item input input-bordered w-48 sm:w-24 md:w-36"
           placeholder="Buscar produtos..."
           defaultValue={q}
           name="q"
@@ -36,5 +36,5 @@ export const SearchBox = () => {
         </button>
       </div>
     </form>
-  );
-};
+  )
+}

@@ -29,9 +29,7 @@ const Menu = () => {
 
   return (
     <>
-      <div className="hidden md:block">
-        <SearchBox />
-      </div>
+      <div className="hidden md:block"></div>
       <div className="flex items-stretch">
         <ul className="flex items-stretch">
           <i className="btn btn-ghost ">
@@ -72,8 +70,8 @@ const Menu = () => {
           ) : (
             <>
               <li>
-                <div className="bg-amber-400 text-black rounded">
-                  <label className="btn btn-ghost rounded-btn">
+                <div className="bg-amber-400 text-base w-24 text-black rounded">
+                  <label className="btn btn-ghost rounded-btn sm:text-xs">
                     <Link href={`/sellerinfo`}>Venda conosco</Link>
                   </label>
                 </div>
