@@ -17,7 +17,7 @@ export default async function Home() {
   const latestProducts = await productService.getLatest()
   return (
     <>
-      <div className="mt-16">
+      <div className="mt-4">
         <div>
           <div className="bg-fixed ...">
             <h4 className="mt-2 text-xl py-2 w-full">Produtos em destaque</h4>

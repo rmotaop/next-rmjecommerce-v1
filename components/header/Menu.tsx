@@ -62,23 +62,6 @@ const Menu = () => {
               </label>
             )}
           </i>
-
-          {session && session.user.isSeller ? (
-            <>
-              <li></li>
-            </>
-          ) : (
-            <>
-              <li>
-                <div className="bg-amber-400 text-base w-24 text-black rounded">
-                  <label className="btn btn-ghost rounded-btn sm:text-xs">
-                    <Link href={`/sellerinfo`}>Venda conosco</Link>
-                  </label>
-                </div>
-              </li>
-            </>
-          )}
-
           <li>
             <Link className="btn btn-ghost rounded-btn" href="/cart">
               Carrinho
@@ -161,6 +144,22 @@ const Menu = () => {
                 Entrar
               </button>
             </li>
+          )}
+
+          {session && session.user.isSeller ? (
+            <>
+              <li></li>
+            </>
+          ) : (
+            <>
+              <li>
+                <div className="bg-amber-400 text-base w-24 text-black rounded">
+                  <label className="btn btn-ghost rounded-btn">
+                    <Link href={`/sellerinfo`}>Venda conosco</Link>
+                  </label>
+                </div>
+              </li>
+            </>
           )}
         </ul>
       </div>

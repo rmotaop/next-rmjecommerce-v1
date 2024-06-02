@@ -6,37 +6,48 @@ import { LogoIcon } from '@/public/images/logo/logo'
 
 const Header = () => {
   return (
-    <header className="">
+    <header>
       <nav>
-        <div className="navbar fixed z-50 bg-base-300 min-[500px]:left">
-          <div className="">
-            <label htmlFor="my-drawer" className="btn btn-square btn-ghost ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-5 h-5 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </label>
-          </div>
-          <div className="flex flex-wrap justify-around mx-auto min-[500px]:text-left">
-            <div className="left-0">
-              <Link href="/" className="btn btn-ghost">
-                <LogoIcon className="h-12 w-48" />
-              </Link>
-            </div>
-            <div className="left-0">
-              <SearchBox />
-            </div>
-            <div className="left-0">
-              <Menu />
+        <div className="flex flex-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <label
+                  htmlFor="my-drawer"
+                  className="btn btn-square btn-ghost "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="inline-block w-5 h-5 stroke-current"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    ></path>
+                  </svg>
+                </label>
+              </div>
+
+              <div className="hidden md:block">
+                <div className="ml-4 flex items-center space-x-4">
+                  <div className="">
+                    <Link href="/" className="btn btn-ghost">
+                      <LogoIcon className="h-12 w-48" />
+                    </Link>
+                  </div>
+                  <div className="">
+                    <SearchBox />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Menu />
+              </div>
             </div>
           </div>
         </div>
