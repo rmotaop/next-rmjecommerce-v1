@@ -91,4 +91,4 @@
 
 ## Promo
 
-Welcome to version 1 of next.js rmjecommerce. it is coding course to build a full functional ecommerce website like amazon using next.js lastest features like App router, sever components and actions and route handler for my graduation curse of Puc Minas
+Welcome to version 1 of next.js rmjecommerce. it is coding course to build a full functional ecommerce website using next.js lastest features like App router, sever components and actions and route handler for my graduation curse of Puc Minas
