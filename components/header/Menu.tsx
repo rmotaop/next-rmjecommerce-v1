@@ -146,11 +146,7 @@ const Menu = () => {
             </li>
           )}
 
-          {session && session.user.isSeller ? (
-            <>
-              <li></li>
-            </>
-          ) : (
+          {session && !session.user.isSeller ? (
             <>
               <li>
                 <div className="bg-amber-400 text-base w-24 text-black rounded">
@@ -159,6 +155,10 @@ const Menu = () => {
                   </label>
                 </div>
               </li>
+            </>
+          ) : (
+            <>
+              <li></li>
             </>
           )}
         </ul>
