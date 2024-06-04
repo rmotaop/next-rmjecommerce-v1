@@ -1,79 +1,79 @@
-"use client";
-import useSWRMutation from "swr/mutation";
-import useSWR from "swr";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import Link from "next/link";
-import { ValidationRule, useForm } from "react-hook-form";
-import { formatId } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { Product } from "@/lib/models/ProductModel";
+'use client'
+import useSWRMutation from 'swr/mutation'
+import useSWR from 'swr'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import Link from 'next/link'
+import { ValidationRule, useForm } from 'react-hook-form'
+import { formatId } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
+import { Product } from '@/lib/models/ProductModel'
 
 export default function ProductEditForm(
   this: any,
   {
     productId,
   }: {
-    productId: string;
+    productId: string
   }
 ) {
-  const { data: product, error } = useSWR(`/api/admin/products/${productId}`);
-  const { data: category } = useSWR(`/api/admin/categories`);
-  const { data: user } = useSWR(`/api/admin/users`);
-  const { data: seller } = useSWR(`/api/admin/sellers`);
-  const { data: reviews } = useSWR(`/api/admin/reviews`);
+  const { data: product, error } = useSWR(`/api/admin/products/${productId}`)
+  const { data: category } = useSWR(`/api/admin/categories`)
+  const { data: user } = useSWR(`/api/admin/users`)
+  const { data: seller } = useSWR(`/api/admin/sellers`)
+  const { data: reviews } = useSWR(`/api/admin/reviews`)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const { trigger: updateProduct, isMutating: isUpdating } = useSWRMutation(
     `/api/admin/products/${productId}`,
     async (url, { arg }) => {
       const res = await fetch(`${url}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(arg),
-      });
+      })
 
-      const data = await res.json();
-      if (!res.ok) return toast.error(data.message);
+      const data = await res.json()
+      if (!res.ok) return toast.error(data.message)
 
-      toast.success("Produto atualizado com sucesso.");
-      router.push("/admin/products");
+      toast.success('Produto atualizado com sucesso.')
+      router.push('/admin/products')
     }
-  );
+  )
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<Product>();
+  } = useForm<Product>()
 
   useEffect(() => {
-    if (!product) return;
-    setValue("user", product.user);
-    setValue("name", product.name);
-    setValue("slug", product.slug);
-    setValue("category", product.category);
-    setValue("image", product.image);
-    setValue("price", product.price);
-    setValue("countInStock", product.countInStock);
-    setValue("brand", product.brand);
-    setValue("seller", product.seller);
-    setValue("rating", product.rating);
-    setValue("numReviews", product.numReviews);
-    setValue("description", product.description);
-    setValue("isFeatured", product.isFeatured);
-  }, [product, setValue]);
+    if (!product) return
+    setValue('user', product.user)
+    setValue('name', product.name)
+    setValue('slug', product.slug)
+    setValue('category', product.category)
+    setValue('image', product.image)
+    setValue('price', product.price)
+    setValue('countInStock', product.countInStock)
+    setValue('brand', product.brand)
+    setValue('seller', product.seller)
+    setValue('rating', product.rating)
+    setValue('numReviews', product.numReviews)
+    setValue('description', product.description)
+    setValue('isFeatured', product.isFeatured)
+  }, [product, setValue])
 
   const formSubmit = async (formData: any) => {
-    await updateProduct(formData);
-  };
+    await updateProduct(formData)
+  }
 
-  if (error) return error.message;
-  if (!product) return "Carregando...";
+  if (error) return error.message
+  if (!product) return 'Carregando...'
 
   const FormInput = ({
     id,
@@ -81,10 +81,10 @@ export default function ProductEditForm(
     required,
     pattern,
   }: {
-    id: keyof Product;
-    name: string;
-    required?: boolean;
-    pattern?: ValidationRule<RegExp>;
+    id: keyof Product
+    name: string
+    required?: boolean
+    pattern?: ValidationRule<RegExp>
   }) => (
     <div className="md:flex mb-6">
       <label className="label md:w-1/5" htmlFor={id}>
@@ -105,42 +105,42 @@ export default function ProductEditForm(
         )}
       </div>
     </div>
-  );
+  )
 
   {
     /* Carregar imagem do produto */
   }
   const uploadHandler = async (e: any) => {
-    const toastId = toast.loading("Fazendo upload da imagem...");
+    const toastId = toast.loading('Fazendo upload da imagem...')
     try {
-      const resSign = await fetch("/api/cloudinary-sign", {
-        method: "POST",
-      });
-      const { signature, timestamp } = await resSign.json();
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("signature", signature);
-      formData.append("timestamp", timestamp);
-      formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!);
+      const resSign = await fetch('/api/cloudinary-sign', {
+        method: 'POST',
+      })
+      const { signature, timestamp } = await resSign.json()
+      const file = e.target.files[0]
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('signature', signature)
+      formData.append('timestamp', timestamp)
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY!)
       const res = await fetch(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`,
         {
-          method: "POST",
+          method: 'POST',
           body: formData,
         }
-      );
-      const data = await res.json();
-      setValue("image", data.secure_url);
-      toast.success("Arquivo enviado com sucesso.", {
+      )
+      const data = await res.json()
+      setValue('image', data.secure_url)
+      toast.success('Arquivo enviado com sucesso.', {
         id: toastId,
-      });
+      })
     } catch (err: any) {
       toast.error(err.message, {
         id: toastId,
-      });
+      })
     }
-  };
+  }
 
   return (
     <div>
@@ -159,9 +159,9 @@ export default function ProductEditForm(
               <select
                 className="file-input w-full max-w-md"
                 id="user"
-                onChange={(e) => setValue("user", e.target.value)}
+                onChange={(e) => setValue(user, e.target.value)}
               >
-                <option id="user" value="0">
+                <option id="user" value="">
                   lista de usuários:
                 </option>
                 {user?.map((use: any, _id: any) => (
@@ -199,7 +199,7 @@ export default function ProductEditForm(
               <select
                 className="file-input w-full max-w-md"
                 id="category"
-                onChange={(e) => setValue("category", e.target.value)}
+                onChange={(e) => setValue('category', e.target.value)}
               >
                 <option id="category" value="0">
                   Selecionar categoria:
@@ -223,7 +223,7 @@ export default function ProductEditForm(
               <select
                 className="file-input w-full max-w-md"
                 id="seller"
-                onChange={(e) => setValue("seller", e.target.value)}
+                onChange={(e) => setValue('seller', e.target.value)}
               >
                 <option id="seller" value="0">
                   Selecionar vendedor:
@@ -275,5 +275,5 @@ export default function ProductEditForm(
         </form>
       </div>
     </div>
-  );
+  )
 }

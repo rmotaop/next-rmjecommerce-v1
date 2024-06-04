@@ -33,7 +33,7 @@ export default ProductModel
 
 export type Product = {
   _id?: string
-  user?: { name: string }
+  user: { name: string }
   name: string
   slug: string
   category: string
