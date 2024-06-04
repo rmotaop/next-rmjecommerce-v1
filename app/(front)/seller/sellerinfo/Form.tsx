@@ -1,37 +1,37 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SetStateAction, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import Link from "next/link";
-import toast from "react-hot-toast";
+'use client'
+import { useSession } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { SetStateAction, useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 type Inputs = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  cpf: string;
-  cnpj: string;
-  address: string;
-  phone: string;
-  bronze: string;
-  hostingSmall: string;
-  isSeller: string;
-  contract: string;
-  complement: string;
-  diamante: string;
-  logo: string;
-  storename: string;
-  description: string;
-};
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+  cpf: string
+  cnpj: string
+  address: string
+  phone: string
+  bronze: string
+  hostingSmall: string
+  isSeller: string
+  contract: string
+  complement: string
+  diamante: string
+  logo: string
+  storename: string
+  description: string
+}
 
 const Form = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
-  const params = useSearchParams();
-  const router = useRouter();
-  let callbackUrl = params.get("callbackUrl") || "/";
+  const params = useSearchParams()
+  const router = useRouter()
+  let callbackUrl = params.get('callbackUrl') || '/'
   const {
     register,
     handleSubmit,
@@ -40,30 +40,30 @@ const Form = () => {
     formState: { errors, isSubmitting },
   } = useForm<Inputs>({
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      cpf: "",
-      cnpj: "",
-      address: "",
-      phone: "",
-      bronze: "",
-      isSeller: "",
-      complement: "",
-      contract: "",
-      diamante: "",
-      hostingSmall: "",
-      logo: "",
-      storename: "",
-      description: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      cpf: '',
+      cnpj: '',
+      address: '',
+      phone: '',
+      bronze: '',
+      isSeller: '',
+      complement: '',
+      contract: '',
+      diamante: '',
+      hostingSmall: '',
+      logo: '',
+      storename: '',
+      description: '',
     },
-  });
+  })
   useEffect(() => {
     if (session && session.seller) {
-      router.push(callbackUrl);
+      router.push(callbackUrl)
     }
-  }, [callbackUrl, params, router, session]);
+  }, [callbackUrl, params, router, session])
 
   const formSubmit: SubmitHandler<Inputs> = async (form) => {
     const {
@@ -82,13 +82,13 @@ const Form = () => {
       logo,
       storename,
       description,
-    } = form;
+    } = form
 
     try {
-      const res = await fetch("/api/auth/seller", {
-        method: "POST",
+      const res = await fetch('/api/auth/seller', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name,
@@ -107,46 +107,46 @@ const Form = () => {
           address,
           description,
         }),
-      });
+      })
       if (res.ok) {
-        return router.push(`/seller`);
+        return router.push(`/seller`)
       } else {
-        const data = await res.json();
-        throw new Error(data.message);
+        const data = await res.json()
+        throw new Error(data.message)
       }
     } catch (err: any) {
       const error =
-        err.message && err.message.indexOf("E11000") === 0
-          ? "cpf / cnpj - está duplicado verifique"
-          : err.message;
-      toast.error(error || "error");
+        err.message && err.message.indexOf('E11000') === 0
+          ? 'cpf / cnpj - está duplicado verifique'
+          : err.message
+      toast.error(error || 'error')
     }
-  };
+  }
 
-  const [document, setDocument] = useState("");
-  const [contract, setContract] = useState("");
+  const [document, setDocument] = useState('')
+  const [contract, setContract] = useState('')
 
   const onOptionChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setDocument(e.target.value);
-  };
+    setDocument(e.target.value)
+  }
   const onContractChange = (e: {
-    target: { value: SetStateAction<string> };
+    target: { value: SetStateAction<string> }
   }) => {
-    setContract(e.target.value);
-  };
+    setContract(e.target.value)
+  }
 
   return (
     <div>
-      <div className="w-1/2 mx-auto card bg-base-300 mt-4">
-        <div className="card-body">
-          <h1 className="text-center text-lg">
-            Informações de cadastro do vendedor
+      <div className="w-max card bg-red-300 my-4">
+        <div className="w-max">
+          <h1 className="card-title">
+            TESTE Informações de cadastro do vendedor
           </h1>
 
           <form onSubmit={handleSubmit(formSubmit)}>
             {/* radio cpf/cnpj */}
-            <div className="grid-col-1">
-              <div className="pt-1 flex flex-row">
+            <div className="w-max bg-red-500">
+              <div className="pt-1 flex flex-wrap">
                 <input
                   className="w-5 "
                   type="radio"
@@ -179,8 +179,8 @@ const Form = () => {
             </h6>
 
             {/* radio cpf */}
-            <div className="pt-1 inline-grid grid-cols-2 gap-4">
-              {document === "cpf" ? (
+            <div className="pt-1 gap-4">
+              {document === 'cpf' ? (
                 <div>
                   <label className="label" htmlFor="cpf">
                     Doc do vendedor
@@ -189,7 +189,7 @@ const Form = () => {
                     type="text"
                     id="cpf"
                     placeholder="000.000.000-00"
-                    {...register("cpf", {})}
+                    {...register('cpf', {})}
                     className="placeholder:italic placeholder:text-slate-700 input input-bordered lg:w-60 sm:w-16 md:w-32"
                   />
                   {errors.cpf?.message && (
@@ -205,7 +205,7 @@ const Form = () => {
                     type="text"
                     id="cnpj"
                     placeholder="00.000.000/0000-00"
-                    {...register("cnpj", {})}
+                    {...register('cnpj', {})}
                     className="placeholder:italic placeholder:text-slate-700 input input-bordered font-basic lg:w-60 sm:w-16 md:w-32 md:text-xs"
                   />
                   {errors.cnpj?.message && (
@@ -221,7 +221,7 @@ const Form = () => {
                   type="text"
                   id="phone"
                   placeholder="00-0000-0000"
-                  {...register("phone", {})}
+                  {...register('phone', {})}
                   // {...register("name", {
                   //   required: "O nome é obrigatório",
                   // })}
@@ -241,15 +241,7 @@ const Form = () => {
                 <input
                   type="text"
                   id="logo"
-                  {...register("logo", {})}
-                  // {...register("cnpj", {
-                  //   required: "O email é obrigatório",
-                  //   pattern: {
-                  //     value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                  //     message:
-                  //       "Email aparentemente é inválido por favor verifique",
-                  //   },
-                  // })}
+                  {...register('logo', {})}
                   className="input input-bordered sm:w-15 md:w-32 lg:w-60"
                 />
                 {errors.logo?.message && (
@@ -263,10 +255,7 @@ const Form = () => {
                 <input
                   type="text"
                   id="storename"
-                  {...register("storename", {})}
-                  // {...register("name", {
-                  //   required: "O nome é obrigatório",
-                  // })}
+                  {...register('storename', {})}
                   className="input input-bordered lg:w-60 sm:w-16 sm:font-extralight md:w-32 md:font-extralight"
                 />
                 {errors.storename?.message && (
@@ -282,15 +271,7 @@ const Form = () => {
               <input
                 type="text"
                 id="address"
-                {...register("address", {})}
-                // {...register("cnpj", {
-                //   required: "O email é obrigatório",
-                //   pattern: {
-                //     value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                //     message:
-                //       "Email aparentemente é inválido por favor verifique",
-                //   },
-                // })}
+                {...register('address', {})}
                 className="input input-bordered lg:w-full sm:w-32 md:w-48"
               />
               {errors.address?.message && (
@@ -305,15 +286,7 @@ const Form = () => {
               <input
                 type="text"
                 id="description"
-                {...register("description", {})}
-                // {...register("cnpj", {
-                //   required: "O email é obrigatório",
-                //   pattern: {
-                //     value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                //     message:
-                //       "Email aparentemente é inválido por favor verifique",
-                //   },
-                // })}
+                {...register('description', {})}
                 className="input input-bordered lg:w-full sm:w-32 md:w-48"
               />
               {errors.description?.message && (
@@ -396,7 +369,7 @@ const Form = () => {
                   value="100"
                   id="complement"
                   name="complement"
-                  onChange={(e) => setValue("complement", e.target.value)}
+                  onChange={(e) => setValue('complement', e.target.value)}
                 />
                 <label className="label mr-1" htmlFor="complement">
                   R$100 - On line service - cadastro 10 produtos
@@ -409,7 +382,7 @@ const Form = () => {
                   value="1000"
                   id="complement"
                   name="complement"
-                  onChange={(e) => setValue("complement", e.target.value)}
+                  onChange={(e) => setValue('complement', e.target.value)}
                 />
                 <label className="label" htmlFor="complement">
                   R$1000 - On line service - cadastro 100 produtos
@@ -422,7 +395,7 @@ const Form = () => {
                   value="9000"
                   id="complement"
                   name="complement"
-                  onChange={(e) => setValue("complement", e.target.value)}
+                  onChange={(e) => setValue('complement', e.target.value)}
                 />
                 <label className="label font-medium" htmlFor="complement">
                   R$9000 - On line service - cadastro 1000 produtos
@@ -435,7 +408,7 @@ const Form = () => {
                   value="40000"
                   id="complement"
                   name="complement"
-                  onChange={(e) => setValue("complement", e.target.value)}
+                  onChange={(e) => setValue('complement', e.target.value)}
                 />
                 <label className="label" htmlFor="complement">
                   R$40000 - On line service - cadastro 5000 produtos
@@ -451,10 +424,10 @@ const Form = () => {
                 className="w-6"
                 type="checkbox"
                 id="isSeller"
-                onChange={(e) => setValue("isSeller", e.target.value)}
+                onChange={(e) => setValue('isSeller', e.target.value)}
               />
               <label htmlFor="agreeToTerms">
-                Eu concordo com os{" "}
+                Eu concordo com os{' '}
                 <Link className="link" href={`/seller/terms`}>
                   Termos de Serviços.
                 </Link>
@@ -474,8 +447,8 @@ const Form = () => {
                   <input
                     type="text"
                     id="name"
-                    {...register("name", {
-                      required: "O nome é obrigatório",
+                    {...register('name', {
+                      required: 'O nome é obrigatório',
                     })}
                     className="input input-bordered w-full max-w-sm"
                   />
@@ -491,12 +464,12 @@ const Form = () => {
                   <input
                     type="text"
                     id="email"
-                    {...register("email", {
-                      required: "O email é obrigatório",
+                    {...register('email', {
+                      required: 'O email é obrigatório',
                       pattern: {
                         value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
                         message:
-                          "Email aparentemente é inválido por favor verifique",
+                          'Email aparentemente é inválido por favor verifique',
                       },
                     })}
                     className="input input-bordered w-full max-w-sm"
@@ -514,8 +487,8 @@ const Form = () => {
                   <input
                     type="password"
                     id="password"
-                    {...register("password", {
-                      required: "A senha é obrigatória",
+                    {...register('password', {
+                      required: 'A senha é obrigatória',
                     })}
                     className="input input-bordered w-full max-w-sm"
                   />
@@ -530,13 +503,13 @@ const Form = () => {
                   <input
                     type="password"
                     id="confirmPassword"
-                    {...register("confirmPassword", {
-                      required: "Confirmar senha é obrigatório",
+                    {...register('confirmPassword', {
+                      required: 'Confirmar senha é obrigatório',
                       validate: (value) => {
-                        const { password } = getValues();
+                        const { password } = getValues()
                         return (
-                          password === value || "As senhas devem corresponder!"
-                        );
+                          password === value || 'As senhas devem corresponder!'
+                        )
                       },
                     })}
                     className="input input-bordered w-full max-w-sm"
@@ -566,7 +539,7 @@ const Form = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

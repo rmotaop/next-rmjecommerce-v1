@@ -1,8 +1,12 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const productSchema = new mongoose.Schema(
   {
-    user: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     category: { type: String, required: true },
@@ -20,28 +24,28 @@ const productSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
 const ProductModel =
-  mongoose.models.Product || mongoose.model("Product", productSchema);
+  mongoose.models.Product || mongoose.model('Product', productSchema)
 
-export default ProductModel;
+export default ProductModel
 
 export type Product = {
-  _id?: string;
-  user: string;
-  name: string;
-  slug: string;
-  category: string;
-  image: string;
-  price: number;
-  countInStock: number;
-  brand: string;
-  seller: string;
-  rating: number;
-  numReviews: number;
-  description: string;
-  reviews: [Array<Object>];
-  isFeatured: boolean;
-  banner?: string;
-};
+  _id?: string
+  user?: { name: string }
+  name: string
+  slug: string
+  category: string
+  image: string
+  price: number
+  countInStock: number
+  brand: string
+  seller: string
+  rating: number
+  numReviews: number
+  description: string
+  reviews: [Array<Object>]
+  isFeatured: boolean
+  banner?: string
+}

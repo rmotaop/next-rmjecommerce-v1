@@ -12,7 +12,7 @@ const Sidebar = () => {
   if (!categories) return 'Carregando...'
 
   return (
-    <ul className="menu p-4 pt-14 w-80 min-h-full bg-base-200 text-base-content">
+    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
       <li>
         <h2 className="sm:text-base text-xl">Compre por departamento</h2>
       </li>

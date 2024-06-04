@@ -24,7 +24,7 @@
 
 ## Resources
 
-- Youtube Video : https://youtu.be/---
+- Youtube Video : https://www.youtube.com/watch?v=WAwfyh_cSCM
 - Demo Website :  https://next-rmjecommerce-v1.vercel.app/
 - Source Code   :  https://github.com/rmotaop/next-rmjecommerce-v1
 

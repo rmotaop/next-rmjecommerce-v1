@@ -118,6 +118,15 @@ const Menu = () => {
                         </li>
                       </>
                     )}
+                    {!session.user.isSeller && (
+                      <>
+                        <li onClick={handleClick}>
+                          <label className="bg-amber-400 hover:text-white rounded-btn text-black">
+                            <Link href={`/sellerinfo`}>Venda conosco</Link>
+                          </label>
+                        </li>
+                      </>
+                    )}
 
                     <li onClick={handleClick}>
                       <Link href="/order-history">Histórico pedidos</Link>
@@ -144,22 +153,6 @@ const Menu = () => {
                 Entrar
               </button>
             </li>
-          )}
-
-          {session && !session.user.isSeller ? (
-            <>
-              <li>
-                <div className="bg-amber-400 text-base w-24 text-black rounded">
-                  <label className="btn btn-ghost rounded-btn">
-                    <Link href={`/sellerinfo`}>Venda conosco</Link>
-                  </label>
-                </div>
-              </li>
-            </>
-          ) : (
-            <>
-              <li></li>
-            </>
           )}
         </ul>
       </div>

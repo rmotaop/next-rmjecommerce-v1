@@ -1,57 +1,57 @@
-"use client";
-import { Product } from "@/lib/models/ProductModel";
-import { formatId, formatPrice } from "@/lib/utils";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import useSWR from "swr";
-import useSWRMutation from "swr/mutation";
+'use client'
+import { Product } from '@/lib/models/ProductModel'
+import { formatId, formatPrice } from '@/lib/utils'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import useSWR from 'swr'
+import useSWRMutation from 'swr/mutation'
 
 export default function Products() {
-  const { data: products, error } = useSWR(`/api/admin/products`);
+  const { data: products, error } = useSWR(`/api/admin/products`)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const { trigger: deleteProduct } = useSWRMutation(
     `/api/admin/products`,
     async (url, { arg }: { arg: { productId: string } }) => {
-      const toastId = toast.loading("Excluindo produto...");
+      const toastId = toast.loading('Excluindo produto...')
       const res = await fetch(`${url}/${arg.productId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
       res.ok
-        ? toast.success("Produto excluído com sucesso", {
+        ? toast.success('Produto excluído com sucesso', {
             id: toastId,
           })
         : toast.error(data.message, {
             id: toastId,
-          });
+          })
     }
-  );
+  )
 
   const { trigger: createProduct, isMutating: isCreating } = useSWRMutation(
     `/api/admin/products`,
     async (url) => {
       const res = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
-      const data = await res.json();
-      if (!res.ok) return toast.error(data.message);
+      })
+      const data = await res.json()
+      if (!res.ok) return toast.error(data.message)
 
-      toast.success("Produto criado com sucesso");
-      router.push(`/admin/products/${data.product._id}`);
+      toast.success('Produto criado com sucesso')
+      router.push(`/admin/products/${data.product._id}`)
     }
-  );
+  )
 
-  if (error) return "Ocorreu um erro.";
-  if (!products) return "Carregando...";
+  if (error) return 'Ocorreu um erro.'
+  if (!products) return 'Carregando...'
 
   return (
     <div>
@@ -83,7 +83,7 @@ export default function Products() {
           <tbody>
             {products.map((product: Product) => (
               <tr key={product._id}>
-                <td>{product.user}</td>
+                <td>{product.user?.name}</td>
                 <td>{product.name}</td>
                 <td>{formatPrice(product.price)}</td>
                 <td>{product.category}</td>
@@ -112,5 +112,5 @@ export default function Products() {
         </table>
       </div>
     </div>
-  );
+  )
 }
